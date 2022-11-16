@@ -60,7 +60,7 @@
                 <span class="form-message"></span>
             </div>
 
-            <button class="form-submit" >Đăng ký</button>
+            <button class="form-submit">Đăng ký</button>
         </form>
     </div>
     <script src="./register.js"></script>
@@ -79,37 +79,15 @@
                 }, 'Mật khẩu nhập lại không chính xác')
             ],
             onSubmit: function (data) {
-                
-                var fname = document.getElementById('fullname');
-                var username = document.getElementById('username');
-                var pw = document.getElementById('password');
-                var cpw = document.getElementById('cpassword');
-                var storeduser = JSON.parse(localStorage.getItem('Infor'));
-                var list_store = storeduser.map((e) => e.username);
-                console.log(list_store);
-                // console.log(storeduser);
-                // console.log(list_store);
-                if(data.username === list_store[4]){
-                    alert('Trung user name')
-                }else{
-                    var itemUserName = []; 
-                    for (var number in data) {
-                    if (data.hasOwnProperty(number)) {
-                        itemUserName.push(number);
-                        }
-                    }
-                    console.log(itemUserName);
-                    itemUserName.push(data);
-                    localStorage.setItem('Infor', JSON.stringify(itemUserName));
-                    // localStorage.setItem('fname', fname.value);
-                    // localStorage.setItem('username', username.value);
-                    // itemUserName = JSON.parse(localStorage.setItem('username', username.value))
-                    // localStorage.setItem('pw', pw.value);
-                    // localStorage.setItem('cpw', cpw.value);
-                    // items.push(data);
-                    // console.log(items);
-                    // window.location.href = "../home/index.html";
-                }
+                console.log(data);
+                const user_item = JSON.parse(localStorage.getItem("todos")) || [];
+                const usernameValue = document.getElementById(username);
+                const usernameLocal = localStorage
+                user_item.push(data)            
+                localStorage.setItem("todos", JSON.stringify(user_item));
+
+                // window.location.href = "../home/index.html";
+                // }
             }
         });
     </script>
