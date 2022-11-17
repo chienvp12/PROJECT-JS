@@ -21,5 +21,47 @@ a{
     display: flex;
     justify-content: space-between;
     margin: 20px;
-    box-shadow: 1px 10px 5px #dad8d8;
+    
+}
+.box {
+	float: left;
+	padding: 15px 0px;
+}
+.clear-fix{
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+.clearfix::after {
+	clear: both;
+	display: table;
+}
+
+.options {
+	margin: 5px 0px 0px 0px;
+	
+}
+.tb_search{
+	width: 22%;
+	margin-bottom: 10px;
+}
+
+.pagination a {
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+	transition: background-color .3s;
+	border: 1px solid #ddd;
+	margin: 0 4px;
+}
+
+.pagination a.active {
+	background-color: #4CAF50;
+	color: white;
+	border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+	background-color: #ddd;
 }

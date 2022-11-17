@@ -35,11 +35,11 @@
 
             <div class="spacer"></div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="fullname" class="form-label">Full name</label>
                 <input id="fullname" name="fullname" type="text" class="form-control">
                 <span class="form-message"></span>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="firstname" class="form-label">First Name</label>
                 <input id="firstname" name="firstname" type="text" class="form-control">
@@ -80,7 +80,7 @@
             formGroupSelector: '.form-group',
             errorSelector: '.form-message',
             rules: [
-                Validator.isRequired('#fullname', ''),
+                // Validator.isRequired('#fullname', ''),
                 Validator.isRequired('#firstname', ''),
                 Validator.isRequired('#lastname', ''),
                 Validator.isUser('#username'),
