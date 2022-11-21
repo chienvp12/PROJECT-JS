@@ -90,21 +90,24 @@
                     return document.querySelector('#form-1 #password').value;
                 }, 'Mật khẩu nhập lại không chính xác')
             ],
-            onSubmit: function (data) {
+            onSubmit: async function (data) {
                 // console.log(data);
-                const user_item = JSON.parse(localStorage.getItem("todos")) || [];
+                const user_item = await JSON.parse(localStorage.getItem("todos")) || [];
+                console.log(user_item.length);
                 const usernameValue = document.getElementById("username");
                 const usernameLocal = JSON.parse(localStorage.getItem("todos"));
                 const checkUser = user_item.map(e => e.username);
+                
                 // console.log(checkUser.indexOf(usernameValue.value));
                 if (checkUser.indexOf(usernameValue.value) < 0) {
                     user_item.push(data)
                     localStorage.setItem("todos", JSON.stringify(user_item));
+                    window.location.href = "../home/index.html";
                 } else {
                     alert('user đã tồn tại');
                 }
 
-                window.location.href = "../home/index.html";
+                
                 // }
             }
         });

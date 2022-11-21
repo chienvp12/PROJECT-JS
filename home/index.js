@@ -78,12 +78,13 @@ function active_page(element, rows, req_per_page) {
 function render_table_rows(rows, req_per_page, page_no) {
     const response = JSON.parse(window.atob(rows));
     const resp = response.slice(req_per_page * (page_no - 1), req_per_page * page_no)
+    // console.log(resp);
     $('#request-table').empty()
     $('#request-table').append('<tr><th>STT</th><th>First Name</th><th>Last Name</th><th>Username</th></tr>');
     resp.forEach(function (element, index) {
         if (Object.keys(element).length > 0) {
             const { firstname, lastname, username } = element;
-            const td = `<tr><td>${++index}</td><td>${firstname}</td><td>${lastname}</td><td>${username}</td></tr> `;
+            const td = `<tr><td>${++index}</td><td>${firstname}</td><td>${lastname}</td><td>${username}</td><td><input type="button" value="Delete" onclick="deleteRow(this)"></td></tr> `;
             $('#request-table').append(td)
         }
     });
@@ -97,6 +98,7 @@ function pagination(data, storeUser) {
         let pager = `<a href="#" id="prev_link" onclick=active_page('prev',\"${all_data}\",${data.req_per_page})>&laquo;</a>` +
             `<a href="#" class="active" onclick=active_page(this,\"${all_data}\",${data.req_per_page})>1</a>`;
         const total_page = Math.ceil(parseInt(storeUser.length) / parseInt(data.req_per_page));
+        
         if (total_page < pagination_visible_pages) {
             render_table_rows(all_data, data.req_per_page, data.page_no);
             for (let num = 2; num <= total_page; num++) {
@@ -128,6 +130,8 @@ function filter_requests() {
     pagination(data, storeUser);
 }
 
+
+// search_input
 function FilterkeyWord_all_table() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("search_input_all");
@@ -147,3 +151,12 @@ function FilterkeyWord_all_table() {
     }
 
 }
+function deleteRow(r) {
+    var i = r.parentNode.parentNode.rowIndex;
+    console.log(i);
+    document.getElementById("request-table").deleteRow(i);
+    const response = JSON.parse(window.atob(rows)).length;
+    storeUser.splice(i-1, 1);
+    console.log(storeUser);
+    // localStorage.setItem("todos", JSON.stringify(storeUser) || []);
+  }
