@@ -12,34 +12,10 @@
 <body>
 
     <div class="register">
-        <!-- <form name='form-login'>
-            <h1>REGISTER</h1>
-    
-            <label for="name">First Name</label>
-            <input type="text" id="fname" placeholder="firstname" required>
-            <label for="name">Last Name</label>
-            <input type="text" id="lname" placeholder="lastname"  required>
-            <label for="name">Username</label>
-            <input type="text" id="username" placeholder="username" required>
-            <label for="pw">Password</label>
-            <input type="password" id= "pw" placeholder="Password" required>
-            
-            <label for="cpw">Confirm Password</label>
-            <input type="password" id= "cpw" placeholder="confirm password" required>
-            <input id="rgstr_btn" type="submit" value="Register" onclick="store()">
-            <button  onclick="store()" >Dang ky</button>
-    
-        </form> -->
         <form action="" method="POST" class="form" id="form-1">
             <h3 class="heading">Register</h3>
 
             <div class="spacer"></div>
-
-            <!-- <div class="form-group">
-                <label for="fullname" class="form-label">Full name</label>
-                <input id="fullname" name="fullname" type="text" class="form-control">
-                <span class="form-message"></span>
-            </div> -->
             <div class="form-group">
                 <label for="firstname" class="form-label">First Name</label>
                 <input id="firstname" name="firstname" type="text" class="form-control">
@@ -102,6 +78,7 @@
                 if (checkUser.indexOf(usernameValue.value) < 0) {
                     user_item.push(data)
                     localStorage.setItem("todos", JSON.stringify(user_item));
+                    console.log("Register success");
                     window.location.href = "../home/index.html";
                 } else {
                     alert('user đã tồn tại');

@@ -18,6 +18,7 @@ function hide_from_beginning(element) {
 // hide pages from pagination ending if more than pagination_visible_pages
 function hide_from_end(element) {
     if (element.style.display === "" || element.style.display === "block") {
+
         element.style.display = "none";
     } else {
         hide_from_beginning(element.previousSibling);
@@ -78,46 +79,45 @@ function active_page(element, rows, req_per_page) {
 function render_table_rows(rows, req_per_page, page_no) {
     const response = JSON.parse(window.atob(rows));
     const resp = response.slice(req_per_page * (page_no - 1), req_per_page * page_no)
-    // console.log(resp);
     $('#request-table').empty()
     $('#request-table').append('<tr><th>STT</th><th>First Name</th><th>Last Name</th><th>Username</th></tr>');
     resp.forEach(function (element, index) {
         if (Object.keys(element).length > 0) {
             const { firstname, lastname, username } = element;
-            const td = `<tr><td>${++index}</td><td>${firstname}</td><td>${lastname}</td><td>${username}</td><td><input type="button" value="Delete" onclick="deleteRow(this)"></td></tr> `;
+            const td = `<tr><td>${++index}</td><td>${firstname}</td><td>${lastname}</td><td>${username}</td><td><input type="button" data-confirm="Are you sure to delete this item?" class="delete" value="Delete" onclick="deleteRow(this)"><input data-toggle="modal" data-target="#myModal" type="button" value="Detail" onclick="viewDetails()" ></td></tr> `;
             $('#request-table').append(td)
         }
     });
-}
 
+}
 // Pagination logic implementation
 function pagination(data, storeUser) {
     const all_data = window.btoa(JSON.stringify(storeUser));
-    $(".pagination").empty();
-    if (data.req_per_page !== 'ALL') {
-        let pager = `<a href="#" id="prev_link" onclick=active_page('prev',\"${all_data}\",${data.req_per_page})>&laquo;</a>` +
-            `<a href="#" class="active" onclick=active_page(this,\"${all_data}\",${data.req_per_page})>1</a>`;
-        const total_page = Math.ceil(parseInt(storeUser.length) / parseInt(data.req_per_page));
-        
-        if (total_page < pagination_visible_pages) {
-            render_table_rows(all_data, data.req_per_page, data.page_no);
-            for (let num = 2; num <= total_page; num++) {
-                pager += `<a href="#" onclick=active_page(this,\"${all_data}\",${data.req_per_page})>${num}</a>`;
-            }
-        } else {
-            render_table_rows(all_data, data.req_per_page, data.page_no);
-            for (let num = 2; num <= pagination_visible_pages; num++) {
-                pager += `<a href="#" onclick=active_page(this,\"${all_data}\",${data.req_per_page})>${num}</a>`;
-            }
-            for (let num = pagination_visible_pages + 1; num <= total_page; num++) {
-                pager += `<a href="#" style="display:none;" onclick=active_page(this,\"${all_data}\",${data.req_per_page})>${num}</a>`;
-            }
-        }
-        pager += `<a href="#" id="next_link" onclick=active_page('next',\"${all_data}\",${data.req_per_page})>&raquo;</a>`;
-        $(".pagination").append(pager);
-    } else {
-        render_table_rows(all_data, storeUser.length, 1);
-    }
+    // $(".pagination").empty();
+    // if (data.req_per_page !== 'ALL') {
+    //     let pager = `<a href="#" id="prev_link" onclick=active_page('prev',\"${all_data}\",${data.req_per_page})>&laquo;</a>` +
+    //         `<a href="#" class="active" onclick=active_page(this,\"${all_data}\",${data.req_per_page})>1</a>`;
+    //     const total_page = Math.ceil(parseInt(storeUser.length) / parseInt(data.req_per_page));
+
+    //     if (total_page < pagination_visible_pages) {
+    //         render_table_rows(all_data, data.req_per_page, data.page_no);
+    //         for (let num = 2; num <= total_page; num++) {
+    //             pager += `<a href="#" onclick=active_page(this,\"${all_data}\",${data.req_per_page})>${num}</a>`;
+    //         }
+    //     } else {
+    //         render_table_rows(all_data, data.req_per_page, data.page_no);
+    //         for (let num = 2; num <= pagination_visible_pages; num++) {
+    //             pager += `<a href="#" onclick=active_page(this,\"${all_data}\",${data.req_per_page})>${num}</a>`;
+    //         }
+    //         for (let num = pagination_visible_pages + 1; num <= total_page; num++) {
+    //             pager += `<a href="#" style="display:none;" onclick=active_page(this,\"${all_data}\",${data.req_per_page})>${num}</a>`;
+    //         }
+    //     }
+    //     pager += `<a href="#" id="next_link" onclick=active_page('next',\"${all_data}\",${data.req_per_page})>&raquo;</a>`;
+    //     $(".pagination").append(pager);
+    // } else {
+    render_table_rows(all_data, storeUser.length, 1);
+    // }
 }
 
 //calling pagination function
@@ -127,12 +127,13 @@ pagination(data, storeUser);
 // trigger when requests per page dropdown changes
 function filter_requests() {
     const data = { "req_per_page": document.getElementById("req_per_page").value, "page_no": 1 };
+    console.log(data);
     pagination(data, storeUser);
 }
 
 
 // search_input
-function FilterkeyWord_all_table() {
+function searchInput() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("search_input_all");
     filter = input.value.toUpperCase();
@@ -151,12 +152,51 @@ function FilterkeyWord_all_table() {
     }
 
 }
-function deleteRow(r) {
-    var i = r.parentNode.parentNode.rowIndex;
-    console.log(i);
-    document.getElementById("request-table").deleteRow(i);
-    const response = JSON.parse(window.atob(rows)).length;
-    storeUser.splice(i-1, 1);
-    console.log(storeUser);
-    // localStorage.setItem("todos", JSON.stringify(storeUser) || []);
-  }
+var rIndex,table = document.getElementById("request-table");
+function deleteRow() {
+    // var i = r.parentNode.parentNode.rowIndex;
+    if(confirm("are you delete")) {
+        const userLogin = JSON.parse(localStorage.getItem('userlogin')).map(e => e.username);
+        const getUser = storeUser.map(e => e.username);
+        const validCheck = [...getUser,...userLogin];
+        // const username = document.getElementById('username').value;
+        // console.log( table.rows[rIndex].cells[3]);
+        table.deleteRow(rIndex);
+        if(userLogin[rIndex] === userLogin[0]){
+            document.getElementById("request-table").deleteRow(rIndex);
+            storeUser.splice(rIndex - 1, 1);
+            console.log("xoa duoc");
+            // localStorage.setItem("todos", JSON.stringify(storeUser) || []);     
+        }else{
+            console.log("khong the xoa");
+        }
+    }
+}
+function viewDetails(){
+    // var i = r.parentNode.parentNode.rowIndex;s
+    for(var i = 1; i <table.rows.length;i++){
+        table.rows[i].onclick = function (){
+            rIndex = this.rowIndex;
+            console.log(rIndex);
+            document.getElementById('firstname').value = this.cells[1].innerHTML;
+            document.getElementById('lastname').value = this.cells[2].innerHTML;
+            document.getElementById('username').value = this.cells[3].innerHTML;
+            // document.getElementById('password').value = this.cells[3].innerHTML;
+
+        }
+    }
+}
+function update(){
+
+    const firstname = document.getElementById('firstname').value;
+    const lastname = document.getElementById('lastname').value;
+    const username = document.getElementById('username').value;
+    table.rows[rIndex].cells[1].innerHTML = firstname;
+    table.rows[rIndex].cells[2].innerHTML = lastname;
+    table.rows[rIndex].cells[3].innerHTML = username;
+    storeUser[rIndex-1].username = username;
+    storeUser[rIndex-1].firstname = firstname;
+    storeUser[rIndex-1].lastname = lastname;  
+    localStorage.setItem('userUpdate', JSON.stringify(storeUser));
+
+}

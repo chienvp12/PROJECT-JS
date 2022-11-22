@@ -36,6 +36,7 @@
     </div>
 
     <script src="../register/register.js"></script>
+    <script src="./login.js"></script>
     <script>
         Validator({
             form: '#form-2',
@@ -46,24 +47,7 @@
                 Validator.minLength('#password', 8),
             ],
             onSubmit: function (data) {
-
-                const storeduser = JSON.parse(localStorage.getItem('users'));
-                const userName = document.getElementById('userName').value;
-                const userPw = document.getElementById('password').value;
-
-                const checkValid = storeduser.filter((e) => userName === e.username && userPw === e.password);
-                if(checkValid.length === 0){
-                    alert('Login fail!');
-                }else{
-                    checkValid.forEach((e) => {
-                  if (userName === e.username && userPw === e.password) {
-                        alert('Login succes')
-                        window.location.href = "../home/index.html";
-                    }
-                });
-                }
-                
-
+                validator();
             }
         });
 

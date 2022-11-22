@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>Home Page</title>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -33,14 +35,15 @@
         </div>
         <div class="table-getAll">
             <div class="tb_search">
-                <input type="text" id="search_input_all" onkeyup="FilterkeyWord_all_table()" placeholder="Search.." class="form-control">
-                        </div>
+                <input type="text" id="search_input_all" onkeyup="searchInput()" placeholder="Search.."
+                    class="form-control">
+            </div>
             <table id="request-table" class="table">
             </table>
         </div>
         <div class="clear-fix">
             <div class="box options">
-                <label >Request page</label>
+                <label>Request page</label>
                 <select id="req_per_page" onchange="filter_requests()">
                     <option>5</option>
                     <option>10</option>
@@ -49,8 +52,88 @@
             </div>
             <div class="box pagination"></div>
         </div>
-       
+
+
+        <!-- modal details -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Details</h4>
+                    </div>
+                    <div class="modal-body" id="modal-body-main">
+                        <form action="" method="POST" class="form" id="form-1">
+                            <h3 class="heading">Profile</h3>
+
+                            <div class="spacer"></div>
+                            <div class="form-group">
+                                <label for="firstname" class="form-label">First Name</label>
+                                <input id="firstname" name="firstname" type="text" class="form-control">
+                                <span class="form-message"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="form-label">Last Name</label>
+                                <input id="lastname" name="lastname" type="text" class="form-control">
+                                <span class="form-message"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="username" class="form-label">Username</label>
+                                <input id="username" name="username" type="text" class="form-control">
+                                <span class="form-message"></span>
+                            </div>
+                            <button class="form-submit" onclick="update()">Update</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
     <script src="./index.js"></script>
+    <script src="../register/register.js"></script>
+    <script>
+        Validator({
+            form: '#form-1',
+            formGroupSelector: '.form-group',
+            errorSelector: '.form-message',
+            rules: [
+                
+                Validator.isRequired('#firstname', ''),
+                Validator.isRequired('#lastname', ''),
+                Validator.isUser('#username'),
+                
+            ],
+            onSubmit: function (data) {
+                // console.log(data);
+                // const user_item = await JSON.parse(localStorage.getItem("todos")) || [];
+                // console.log(user_item.length);
+                // const usernameValue = document.getElementById("username");
+                // const usernameLocal = JSON.parse(localStorage.getItem("todos"));
+                // const checkUser = user_item.map(e => e.username);
+                
+                // console.log(checkUser.indexOf(usernameValue.value));
+                // if (checkUser.indexOf(usernameValue.value) < 0) {
+                //     user_item.push(data)
+                //     localStorage.setItem("todos", JSON.stringify(user_item));
+                //     console.log("Register success");
+                //     // window.location.href = "../home/index.html";
+                // } else {
+                //     alert('user đã tồn tại');
+                // }
+
+                
+                // }
+
+            }
+        });
+    </script>
 </body>
+
 </html>

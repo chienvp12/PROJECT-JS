@@ -152,11 +152,6 @@ Validator.isConfirmed = function (selector, getConfirmValue, message) {
 }
 
 
-function addUser(){
-
-}
-function Users(fullname, username, password){
-    this.fullname;
-    this.username;
-    this.password;
+function validatorRegister(){
+    
 }
