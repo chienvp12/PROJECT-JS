@@ -24,15 +24,18 @@
             <div class="header_left">
                 <div class="menu-bar">
                     <ul class="menu-bar-content">
-                        <li class="menu-bar-item"><a href="../login/login.html">Login</a></li>
-                        <li class="menu-bar-item"><a href="../register/register.html">Register</a></li>
-                        <li class="menu-bar-item"><a href="#">Get All</a></li>
-                        <li class="menu-bar-item"><a href="#">Get All Detail</a></li>
+                        <li class="menu-bar-item"  id="logout" onclick="logOut()"><a href="../login/login.html">Logout</a></li>
+                        <li class="menu-bar-item" id="getItem" onclick="getItem()"><a href="#">Get All</a></li>
+                        <li class="menu-bar-item" onclick="getContent()"><p class="getContent"></p></li>
 
                     </ul>
+                    <div >
+                       
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- input-search -->
         <div class="table-getAll">
             <div class="tb_search">
                 <input type="text" id="search_input_all" onkeyup="searchInput()" placeholder="Search.."
@@ -52,6 +55,9 @@
             </div>
             <div class="box pagination"></div>
         </div>
+        <!-- input-search-end -->
+
+
 
 
         <!-- modal details -->
@@ -94,6 +100,7 @@
                 </div>
 
             </div>
+            <!-- modal-end -->
         </div>
     </div>
     <script src="./index.js"></script>
@@ -104,11 +111,11 @@
             formGroupSelector: '.form-group',
             errorSelector: '.form-message',
             rules: [
-                
+
                 Validator.isRequired('#firstname', ''),
                 Validator.isRequired('#lastname', ''),
                 Validator.isUser('#username'),
-                
+
             ],
             onSubmit: function (data) {
                 // console.log(data);
@@ -117,7 +124,7 @@
                 // const usernameValue = document.getElementById("username");
                 // const usernameLocal = JSON.parse(localStorage.getItem("todos"));
                 // const checkUser = user_item.map(e => e.username);
-                
+
                 // console.log(checkUser.indexOf(usernameValue.value));
                 // if (checkUser.indexOf(usernameValue.value) < 0) {
                 //     user_item.push(data)
@@ -128,7 +135,7 @@
                 //     alert('user đã tồn tại');
                 // }
 
-                
+
                 // }
 
             }

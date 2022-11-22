@@ -151,7 +151,3 @@ Validator.isConfirmed = function (selector, getConfirmValue, message) {
     }
 }
 
-
-function validatorRegister(){
-    
-}

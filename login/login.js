@@ -1,5 +1,6 @@
 function validator() {
     const storeduser = JSON.parse(localStorage.getItem('todos'));
+    const storedLogin = JSON.parse(localStorage.getItem('userlogin'));
     const userName = document.getElementById('userName').value;
     const userPw = document.getElementById('password').value;
     console.log(storeduser);
@@ -17,8 +18,9 @@ function validator() {
                 }
                 userLogin.push(loginItem);
                 localStorage.setItem('userlogin', JSON.stringify(userLogin));
-                console.log('Login succes')
                 window.location.href = "../home/index.html";
+                // document.getElementById('logout').classList.add('enablebtn');
+                
             }
         });
     }

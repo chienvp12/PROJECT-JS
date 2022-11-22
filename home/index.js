@@ -152,32 +152,34 @@ function searchInput() {
     }
 
 }
-var rIndex,table = document.getElementById("request-table");
+var rIndex, table = document.getElementById("request-table");
 function deleteRow() {
     // var i = r.parentNode.parentNode.rowIndex;
     if(confirm("are you delete")) {
-        const userLogin = JSON.parse(localStorage.getItem('userlogin')).map(e => e.username);
-        const getUser = storeUser.map(e => e.username);
-        const validCheck = [...getUser,...userLogin];
-        // const username = document.getElementById('username').value;
-        // console.log( table.rows[rIndex].cells[3]);
-        table.deleteRow(rIndex);
-        if(userLogin[rIndex] === userLogin[0]){
-            document.getElementById("request-table").deleteRow(rIndex);
-            storeUser.splice(rIndex - 1, 1);
-            console.log("xoa duoc");
-            // localStorage.setItem("todos", JSON.stringify(storeUser) || []);     
-        }else{
-            console.log("khong the xoa");
+    const userLogin = JSON.parse(localStorage.getItem('userlogin')).map(e => e.username);
+        for (var i = 1; i < table.rows.length; i++) {
+            table.rows[i].onclick = function () {
+                rIndex = this.rowIndex;
+                checkUser =  document.getElementById('username').value = this.cells[3].innerHTML;
+                if(userLogin[0] != checkUser){
+                    console.log(checkUser);
+                    table.deleteRow(rIndex);
+                    storeUser.splice(rIndex - 1, 1);
+                    localStorage.setItem("todos", JSON.stringify(storeUser) || []);     
+            }else{
+                console.log("khong xoa duoc");
+            }
         }
     }
+    }
 }
-function viewDetails(){
+// }
+function viewDetails() {
     // var i = r.parentNode.parentNode.rowIndex;s
-    for(var i = 1; i <table.rows.length;i++){
-        table.rows[i].onclick = function (){
+    for (var i = 1; i < table.rows.length; i++) {
+        table.rows[i].onclick = function () {
             rIndex = this.rowIndex;
-            console.log(rIndex);
+            console.log(this.rowIndex);
             document.getElementById('firstname').value = this.cells[1].innerHTML;
             document.getElementById('lastname').value = this.cells[2].innerHTML;
             document.getElementById('username').value = this.cells[3].innerHTML;
@@ -186,7 +188,7 @@ function viewDetails(){
         }
     }
 }
-function update(){
+function update() {
 
     const firstname = document.getElementById('firstname').value;
     const lastname = document.getElementById('lastname').value;
@@ -194,9 +196,22 @@ function update(){
     table.rows[rIndex].cells[1].innerHTML = firstname;
     table.rows[rIndex].cells[2].innerHTML = lastname;
     table.rows[rIndex].cells[3].innerHTML = username;
-    storeUser[rIndex-1].username = username;
-    storeUser[rIndex-1].firstname = firstname;
-    storeUser[rIndex-1].lastname = lastname;  
+    storeUser[rIndex - 1].username = username;
+    storeUser[rIndex - 1].firstname = firstname;
+    storeUser[rIndex - 1].lastname = lastname;
     localStorage.setItem('userUpdate', JSON.stringify(storeUser));
 
 }
+function logOut() {
+    const buttonLog =  document.getElementById("logout");
+    const userLogin = JSON.parse(localStorage.getItem('userlogin')).map(e => e.username);
+    localStorage.removeItem('userlogin');
+    buttonLog.classList.add("disablebtn");
+    window.location.href = "../login/login.html";
+ }
+ function getItem(){
+    document.getElementById('request-table').classList.add('enablebtn');
+ }
+ function getContent(){
+    document.getElementsByClassName('getContent').innerHTML = "Hello";
+ }
