@@ -124,8 +124,8 @@ function update() {
     storeUser[rIndex - 1].username = username;
     storeUser[rIndex - 1].firstname = firstname;
     storeUser[rIndex - 1].lastname = lastname;
-    localStorage.setItem('userUpdate', JSON.stringify(storeUser));
-
+    localStorage.setItem('todos', JSON.stringify(storeUser));
+    window.location.href = "./index.html";
 }
 function logOut() {
     const buttonLog = document.getElementById("logout");
@@ -138,5 +138,5 @@ function getItem() {
     document.getElementById('request-table').classList.add('enablebtn');
 }
 function getContent() {
-    document.getElementsByClassName('getContent').innerHTML = "Hello";
+    document.getElementById('getContent').innerHTML = "Hello";
 }
