@@ -24,13 +24,14 @@
             <div class="header_left">
                 <div class="menu-bar">
                     <ul class="menu-bar-content">
-                        <li class="menu-bar-item"  id="logout" onclick="logOut()"><a href="../login/login.html">Logout</a></li>
-                        <li class="menu-bar-item" id="getItem" onclick="getItem()"><a href="#">Get All</a></li>
-                        <li class="menu-bar-item" onclick="getContent()"><p class="getContent"></p></li>
+                        <li class="menu-bar-item" id="logout" onclick="logOut()"><a
+                                href="../login/login.html">Logout</a></li>
+                        <!-- <li class="menu-bar-item" id="getItem" onclick="getItem()"><a href="#">Get All</a></li> -->
+                        <!-- <li class="menu-bar-item" onclick="getContent()"><p class="getContent"></p></li> -->
 
                     </ul>
-                    <div >
-                       
+                    <div>
+
                     </div>
                 </div>
             </div>
@@ -38,26 +39,23 @@
         <!-- input-search -->
         <div class="table-getAll">
             <div class="tb_search">
-                <input type="text" id="search_input_all" onkeyup="searchInput()" placeholder="Search.."
+                <input type="text" id="search_input_all"  placeholder="Search.."
                     class="form-control">
             </div>
             <table id="request-table" class="table">
             </table>
         </div>
-        <div class="clear-fix">
-            <div class="box options">
-                <label>Request page</label>
-                <select id="req_per_page" onchange="filter_requests()">
-                    <option>5</option>
-                    <option>10</option>
-                    <option>ALL</option>
-                </select>
-            </div>
-            <div class="box pagination"></div>
-        </div>
+
         <!-- input-search-end -->
+        <!-- <li class="btn-prev"></li> -->
+        <div class="pagination-number">
 
+            <ul id="pagination"></ul>
 
+        </div>
+
+        <!-- <li class="btn-next">></li>  -->
+<!-- <div id="pagination"></div> -->
 
 
         <!-- modal details -->
@@ -118,25 +116,7 @@
 
             ],
             onSubmit: function (data) {
-                // console.log(data);
-                // const user_item = await JSON.parse(localStorage.getItem("todos")) || [];
-                // console.log(user_item.length);
-                // const usernameValue = document.getElementById("username");
-                // const usernameLocal = JSON.parse(localStorage.getItem("todos"));
-                // const checkUser = user_item.map(e => e.username);
 
-                // console.log(checkUser.indexOf(usernameValue.value));
-                // if (checkUser.indexOf(usernameValue.value) < 0) {
-                //     user_item.push(data)
-                //     localStorage.setItem("todos", JSON.stringify(user_item));
-                //     console.log("Register success");
-                //     // window.location.href = "../home/index.html";
-                // } else {
-                //     alert('user đã tồn tại');
-                // }
-
-
-                // }
 
             }
         });
