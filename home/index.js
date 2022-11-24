@@ -40,7 +40,7 @@ function renderUser(listItem) {
     <th>Username</th>
     </tr>`
     listItem.map((value, index) => {
-        index = (current_page - 1) * total_page + index + 1;
+        index = (current_page - 1) * per_page + index + 1;
         element += `<tr>
         <td>${index}</td>
         <td>${value.firstname}</td>
