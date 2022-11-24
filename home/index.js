@@ -40,8 +40,9 @@ function renderUser(listItem) {
     <th>Username</th>
     </tr>`
     listItem.map((value, index) => {
+        index = (current_page - 1) * total_page + index + 1;
         element += `<tr>
-        <td>${index + 1}</td>
+        <td>${index}</td>
         <td>${value.firstname}</td>
         <td>${value.lastname}</td>
         <td>${value.username}</td>
@@ -69,22 +70,25 @@ searchBar.addEventListener('keyup', (e)=>{
 
 var rIndex, table = document.getElementById("request-table");
 function deleteRow() {
+    // console.log(e.target.value);
     // var i = r.parentNode.parentNode.rowIndex;
     // if (confirm("are you delete")) {
+        var index;
         const userLogin = JSON.parse(localStorage.getItem('userlogin')).map(e => e.username);
-        console.log(userLogin);
+        // console.log(index = (current_page - 1) * total_page + index + 1);
         for (var i = 1; i < table.rows.length; i++) {
             table.rows[i].onclick = function () {
                 rIndex = this.rowIndex;
                 // console.log(rIndex);
                 checkUser = document.getElementById('username').value = this.cells[3].innerHTML;
-                console.log(rIndex - 1, 1);
+                checkNumber = document.getElementsByClassName('delete').value = this.cells[0].innerHTML;
+                console.log(userLogin[0],checkUser);
                 if (userLogin[0] != checkUser) {
-                    console.log(checkUser);
                     table.deleteRow(rIndex);
-                    storeUser.splice(rIndex - 1, 1);
-                    // localStorage.setItem("todos", JSON.stringify(storeUser) || []);
-                    renderUser(per_user);
+                    console.log(checkUser);
+                    storeUser.splice(checkNumber, 1);
+                    localStorage.setItem("todos", JSON.stringify(storeUser) || []);
+                    // renderUser(per_user);
            
                 } else {
                     console.log("khong xoa duoc");
@@ -92,6 +96,7 @@ function deleteRow() {
             }
         }
     // }
+    
 }
 // }
 function viewDetails() {
