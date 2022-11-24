@@ -19,7 +19,6 @@ function validator() {
                 userLogin.push(loginItem);
                 localStorage.setItem('userlogin', JSON.stringify(userLogin));
                 window.location.href = "../home/index.html";
-                // document.getElementById('logout').classList.add('enablebtn');
                 
             }
         });

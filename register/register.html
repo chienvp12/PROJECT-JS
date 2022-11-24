@@ -61,7 +61,6 @@
             formGroupSelector: '.form-group',
             errorSelector: '.form-message',
             rules: [
-                // Validator.isRequired('#fullname', ''),
                 Validator.isRequired('#firstname', ''),
                 Validator.isRequired('#lastname', ''),
                 Validator.isUser('#username'),
@@ -72,14 +71,12 @@
                 }, 'Mật khẩu nhập lại không chính xác')
             ],
             onSubmit: async function (data) {
-                // console.log(data);
                 const user_item = await JSON.parse(localStorage.getItem("todos")) || [];
                 console.log(user_item.length);
                 const usernameValue = document.getElementById("username");
                 const usernameLocal = JSON.parse(localStorage.getItem("todos"));
                 const checkUser = user_item.map(e => e.username);
                 
-                // console.log(checkUser.indexOf(usernameValue.value));
                 if (checkUser.indexOf(usernameValue.value) < 0) {
                     user_item.push(data)
                     localStorage.setItem("todos", JSON.stringify(user_item));

@@ -1,9 +1,8 @@
 const storeUser = JSON.parse(localStorage.getItem('todos'));
-// console.log(storeUser);
-var current_page = 1;
-var per_page = 5;
-var total_page = 0;
-var per_user = [];
+let current_page = 1;
+let per_page = 5;
+let total_page = 0;
+let per_user = [];
 getUSer();
 function getUSer() {
 
@@ -24,8 +23,7 @@ function handleClick(num){
 }
 function renderPageNumber() {
     total_page = Math.ceil(storeUser.length / per_page);
-    // console.log(total_page);
-    for (var i = 1; i <= total_page; i++) {
+    for (let i = 1; i <= total_page; i++) {
         document.getElementById("pagination").innerHTML += `<li onclick="handleClick(${i})">${i}</li>`
     }
 }
@@ -33,7 +31,7 @@ function renderPageNumber() {
 //render data
 function renderUser(listItem) {
 
-    var element = `<tr>
+    let element = `<tr>
     <th>ID</th>
     <th>First Name</th>
     <th>Last Name</th>
@@ -51,10 +49,6 @@ function renderUser(listItem) {
     });
     document.getElementById("request-table").innerHTML = element;
 }
-
-// renderPageNumber();
-
-// renderPageNumber();
 // search_input
 const searchBar = document.getElementById("search_input_all");
 let listSearch = [];
@@ -63,23 +57,19 @@ searchBar.addEventListener('keyup', (e)=>{
     const filterSearch =  storeUser.filter((userItem) => {
        return userItem.username.includes(searchString);
     });
-    // console.log(filterSearch);
     
     renderUser(filterSearch);
 });
 
-var rIndex, table = document.getElementById("request-table");
+let rIndex, table = document.getElementById("request-table");
 function deleteRow() {
-    // console.log(e.target.value);
-    // var i = r.parentNode.parentNode.rowIndex;
-    // if (confirm("are you delete")) {
-        var index;
+    
+    if (confirm("are you delete")) {
+        
         const userLogin = JSON.parse(localStorage.getItem('userlogin')).map(e => e.username);
-        // console.log(index = (current_page - 1) * total_page + index + 1);
-        for (var i = 1; i < table.rows.length; i++) {
+        for (let i = 1; i < table.rows.length; i++) {
             table.rows[i].onclick = function () {
                 rIndex = this.rowIndex;
-                // console.log(rIndex);
                 checkUser = document.getElementById('username').value = this.cells[3].innerHTML;
                 checkNumber = document.getElementsByClassName('delete').value = this.cells[0].innerHTML;
                 console.log(userLogin[0],checkUser);
@@ -88,27 +78,23 @@ function deleteRow() {
                     console.log(checkUser);
                     storeUser.splice(checkNumber, 1);
                     localStorage.setItem("todos", JSON.stringify(storeUser) || []);
-                    // renderUser(per_user);
            
                 } else {
                     console.log("khong xoa duoc");
                 }
             }
         }
-    // }
+    }
     
 }
-// }
 function viewDetails() {
-    // var i = r.parentNode.parentNode.rowIndex;s
-    for (var i = 1; i < table.rows.length; i++) {
+    for (let i = 1; i < table.rows.length; i++) {
         table.rows[i].onclick = function () {
             rIndex = this.rowIndex;
             console.log(this.rowIndex);
             document.getElementById('firstname').value = this.cells[1].innerHTML;
             document.getElementById('lastname').value = this.cells[2].innerHTML;
             document.getElementById('username').value = this.cells[3].innerHTML;
-            // document.getElementById('password').value = this.cells[3].innerHTML;
 
         }
     }

@@ -11,19 +11,19 @@ function Validator(options) {
         }
     }
 
-    var selectorRules = {};
+    let selectorRules = {};
 
     // Hàm thực hiện validate
     function validate(inputElement, rule) {
-        var errorElement = getParent(inputElement, options.formGroupSelector).querySelector(options.errorSelector);
-        var errorMessage;
+        const errorElement = getParent(inputElement, options.formGroupSelector).querySelector(options.errorSelector);
+        let errorMessage;
         
         // Lấy ra các rules của selector
-        var rules = selectorRules[rule.selector];
+        let rules = selectorRules[rule.selector];
         
         // Lặp qua từng rule & kiểm tra
         // Nếu có lỗi thì dừng việc kiểm
-        for (var i = 0; i < rules.length; ++i) {
+        for (let i = 0; i < rules.length; ++i) {
             errorMessage = rules[i](inputElement.value);
             if (errorMessage) break;
         }
@@ -40,20 +40,19 @@ function Validator(options) {
     }
 
     // Lấy element của form cần validate
-    var formElement = document.querySelector(options.form);
+    const formElement = document.querySelector(options.form);
     
-    // formElement.addEventListener("submit", )
     if (formElement) {
         // Khi submit form
         formElement.onsubmit = function (e) {
             e.preventDefault();
             
-            var isFormValid = true;
+            let isFormValid = true;
 
             // Lặp qua từng rules và validate
             options.rules.forEach(function (rule) {
-                var inputElement = formElement.querySelector(rule.selector);
-                var isValid = validate(inputElement, rule);
+                let inputElement = formElement.querySelector(rule.selector);
+                let isValid = validate(inputElement, rule);
                 if (!isValid) {
                     isFormValid = false;
                 }
@@ -62,14 +61,12 @@ function Validator(options) {
                 // Trường hợp submit với javascript
                 if (typeof options.onSubmit === 'function') {
                     
-                    var enableInputs = formElement.querySelectorAll('[name]');
-                    var formValues = Array.from(enableInputs).reduce(function (values, input) {
+                    let enableInputs = formElement.querySelectorAll('[name]');
+                    let formValues = Array.from(enableInputs).reduce(function (values, input) {
                         values[input.name] = input.value;
                         return values;
                     }, {});
-                    // const user_item = [];
-                    // user_item.push(formValues);
-                    // localStorage.setItem("User", JSON.stringify(user_item));
+                 
                     options.onSubmit(formValues);
                 }
                 // Trường hợp submit với hành vi mặc định
@@ -91,7 +88,7 @@ function Validator(options) {
                 selectorRules[rule.selector] = [rule.test];
             }
 
-            var inputElements = formElement.querySelectorAll(rule.selector);
+            const inputElements = formElement.querySelectorAll(rule.selector);
 
             Array.from(inputElements).forEach(function (inputElement) {
                // Xử lý trường hợp blur khỏi input
@@ -101,7 +98,7 @@ function Validator(options) {
 
                 // Xử lý mỗi khi người dùng nhập vào input
                 inputElement.oninput = function () {
-                    var errorElement = getParent(inputElement, options.formGroupSelector).querySelector(options.errorSelector);
+                    const errorElement = getParent(inputElement, options.formGroupSelector).querySelector(options.errorSelector);
                     errorElement.innerText = '';
                     getParent(inputElement, options.formGroupSelector).classList.remove('invalid');
                 } 
@@ -127,7 +124,7 @@ Validator.isUser = function (selector, message) {
     return {
         selector: selector,
         test: function (value) {
-            var regex = /^\w+([\.-]?\w+)+$/;
+            const regex = /^\w+([\.-]?\w+)+$/;
             return regex.test(value) ? undefined :  message || 'Vui lòng nhập username';
         }
     };
